@@ -47,12 +47,16 @@ class BitcoinDataFilter
   private
 
   def filter_date_range
-    if @filters[:filter_date_to] && @filters[:filter_date_from]
-      @data.select! { |item| Date.parse(item['date']) >= @filters[:filter_date_from] && Date.parse(item['date']) <= @filters[:filter_date_to] }
-    elsif @filters[:filter_date_to]
-      @data.select! { |item| Date.parse(item['date']) <= @filters[:filter_date_to] }
-    elsif @filters[:filter_date_from]
-      @data.select! { |item| Date.parse(item['date']) >= @filters[:filter_date_from] }
+    return unless @filters[:filter_date_to] || @filters[:filter_date_from]
+
+    @data.select! do |item|
+      if @filters[:filter_date_to] && @filters[:filter_date_from]
+        Date.parse(item['date']).between?(@filters[:filter_date_to], @filters[:filter_date_from])
+      elsif @filters[:filter_date_from]
+        Date.parse(item['date']) >= @filters[:filter_date_from]
+      else @filters[:filter_date_to]
+        Date.parse(item['date']) <= @filters[:filter_date_to]
+      end
     end
   end
 
@@ -63,7 +67,8 @@ class BitcoinDataFilter
   end
 
   def order_by_date
-    @data.sort_by! { |date, _price| Date.parse(date) }
-    @data.reverse! if @filters[:order_dir] == :desc
+    @data.sort! do |(date, _price), (next_date, _next_price)|
+      @filters[:order_dir] == :desc ? Date.parse(next_date) <=> Date.parse(date) : Date.parse(date) <=> Date.parse(next_date)
+    end
   end
 end

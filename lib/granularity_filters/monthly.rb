@@ -14,7 +14,7 @@ module GranularityFilters
       end
     end
 
-    def calculate_price_and_return_result
+    def calculate_price
       @new_data.map do |date, total_price|
         first_day_in_month = Date.parse(date)
         days_in_month = (first_day_in_month.next_month - 1).day

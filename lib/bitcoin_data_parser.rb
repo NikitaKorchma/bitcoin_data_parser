@@ -1,4 +1,4 @@
-require 'json'
+require 'oj'
 require 'net/http'
 require './lib/bitcoin_data_filter'
 
@@ -22,8 +22,7 @@ class BitcoinDataParser
   def load_data
     uri = URI.parse(URL)
     response = Net::HTTP.get_response(uri)
-    result = JSON.parse(response.body)
-    @data = result.map { |item| item.slice('date', 'price(USD)') }
+    @data = Oj.load(response.body)
   end
 
   def filter_data

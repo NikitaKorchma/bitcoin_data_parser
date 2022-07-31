@@ -4,15 +4,6 @@ require 'bitcoin_data_parser'
 RSpec.describe BitcoinDataParser do
   context 'Parse Bitcoin data' do
     context 'without parameters' do
-      it 'validate content' do
-        data = BitcoinDataParser.new.parse
-
-        expect(data.class).to eq(Array)
-        expect(data.first.size).to eq(2)
-        expect(data.first.first.class).to eq(String)
-        expect(data.first.last.class).to eq(Float)
-      end
-
       it 'validate date sorting in desc by default' do
         data = BitcoinDataParser.new.parse
         validation_result = []

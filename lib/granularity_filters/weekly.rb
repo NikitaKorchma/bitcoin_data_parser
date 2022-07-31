@@ -16,7 +16,7 @@ module GranularityFilters
       end
     end
 
-    def calculate_price_and_return_result
+    def calculate_price
       @new_data.map do |date, total_price|
         average_price = (total_price / DAYS_IN_WEEK).round(2)
 

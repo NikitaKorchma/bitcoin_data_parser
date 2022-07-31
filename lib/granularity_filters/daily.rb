@@ -11,7 +11,7 @@ module GranularityFilters
       end
     end
 
-    def calculate_price_and_return_result
+    def calculate_price
       @new_data.map do |date, total_price|
         [date, total_price]
       end

@@ -10,7 +10,7 @@ module GranularityFilters
     def filter
       collect_new_data
 
-      calculate_price_and_return_result
+      calculate_price
     end
 
     private
@@ -19,8 +19,8 @@ module GranularityFilters
       raise FiltersMethodNotCalled, 'collect_new_data method must be called'
     end
 
-    def calculate_price_and_return_result
-      raise FiltersMethodNotCalled, 'calculate_price_and_return_result method must be called'
+    def calculate_price
+      raise FiltersMethodNotCalled, 'calculate_price method must be called'
     end
   end
 end
